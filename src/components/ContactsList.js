@@ -1,14 +1,21 @@
 import React from 'react';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
+
 import ContactItem from './ContactItem';
 import PropTypes from 'prop-types';
 
+import styles from './Contacts.module.css';
+import fade from './fade.module.css';
+
 export default function ContactList({ contacts, onDelete }) {
   return (
-    <ul>
+    <TransitionGroup component="ul" className={styles.list}>
       {contacts.map(({ id, ...contact }) => (
-        <ContactItem key={id} {...contact} onDelete={() => onDelete(id)} />
+        <CSSTransition key={id} timeout={250} classNames={fade}>
+          <ContactItem id={id} {...contact} onDelete={() => onDelete(id)} />
+        </CSSTransition>
       ))}
-    </ul>
+    </TransitionGroup>
   );
 }
 
